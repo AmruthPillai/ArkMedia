@@ -1,20 +1,20 @@
 {
-    email admin@{$DOMAIN:localhost}
+    email admin@{$DOMAIN}
     acme_ca https://acme-v02.api.letsencrypt.org/directory
 }
 
-whoami.{$DOMAIN:localhost} {
+whoami.{$DOMAIN} {
     reverse_proxy whoami:80
 }
 
-portainer.{$DOMAIN:localhost} {
+portainer.{$DOMAIN} {
     reverse_proxy portainer:9000
 }
 
-qbittorrent.{$DOMAIN:localhost} {
+qbittorrent.{$DOMAIN} {
     reverse_proxy qbittorrent:8080
 }
 
-jellyfin.{$DOMAIN:localhost} {
+jellyfin.{$DOMAIN} {
     reverse_proxy jellyfin:8096
 }
