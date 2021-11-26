@@ -2,7 +2,7 @@ version: "3"
 
 services:
   caddy:
-    image: caddy:alpine
+    image: caddy:latest
     container_name: caddy
     restart: unless-stopped
     networks:
@@ -53,10 +53,10 @@ services:
       - 8080:8080
     volumes:
       - qbittorrent:/config
-      - ./downloads:/downloads
+      - ./media:/downloads
 
   jellyfin:
-    image: jellyfin/jellyfin
+    image: jellyfin/jellyfin:latest
     container_name: jellyfin
     restart: unless-stopped
     environment:
