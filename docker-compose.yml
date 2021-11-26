@@ -27,6 +27,22 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer:/data
 
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser
+    restart: unless-stopped
+    networks:
+      - web
+    ports:
+      - 8080:80
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - .:/srv
+      - ./config/filebrowser.db:/database.db
+      - ./config/filebrowser.json:/database.json
+
   qbittorrent:
     image: linuxserver/qbittorrent:latest
     container_name: qbittorrent
@@ -42,8 +58,8 @@ services:
       - 6881:6881
       - 6881:6881/udp
     volumes:
-      - qbittorrent:/config
       - ./media:/downloads
+      - qbittorrent:/config
 
   jellyfin:
     image: jellyfin/jellyfin:latest
@@ -54,15 +70,16 @@ services:
     networks:
       - web
     volumes:
+      - ./media:/media
       - jellyfin:/config
       - jellyfin:/cache
-      - ./media:/media
 
 volumes:
-  caddy:
   qbittorrent:
+  filebrowser:
   portainer:
   jellyfin:
+  caddy:
 
 networks:
   web:

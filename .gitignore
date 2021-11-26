@@ -1,5 +1,11 @@
 # Environment Variables
 .env
 
+# Configuration Files
+config/**
+!config/.gitkeep
+!config/filebrowser.db
+
+# Media Files
 media/**
 !media/.gitkeep
