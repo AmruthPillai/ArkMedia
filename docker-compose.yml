@@ -1,6 +1,25 @@
 version: "3"
 
 services:
+  nordvpn:
+    image: azinchen/nordvpn:latest
+    container_name: nordvpn
+    restart: unless-stopped
+    cap_add:
+      - net_admin
+    devices:
+      - /dev/net/tun
+    networks:
+      - web
+    ports:
+      - 8080:80
+    environment:
+      - USER=${NORDVPN_USERNAME}
+      - PASS=${NORDVPN_PASSWORD}
+      - RECREATE_VPN_CRON=5 */3 * * *
+      - NETWORK=192.168.1.0/24;192.168.2.0/24
+      - OPENVPN_OPTS=--mute-replay-warnings
+
   caddy:
     image: caddy:latest
     container_name: caddy
