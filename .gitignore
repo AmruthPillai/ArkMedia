@@ -5,6 +5,7 @@
 config/**
 !config/.gitkeep
 !config/filebrowser.db
+!config/filebrowser.json
 
 # Media Files
 media/**
