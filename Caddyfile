@@ -1,0 +1,20 @@
+{
+    email admin@arkmedia.me
+    acme_ca https://acme-v02.api.letsencrypt.org/directory
+}
+
+whoami.localhost {
+    reverse_proxy whoami:80
+}
+
+portainer.localhost {
+    reverse_proxy portainer:9000
+}
+
+qbittorrent.localhost {
+    reverse_proxy qbittorrent:8080
+}
+
+jellyfin.localhost {
+    reverse_proxy jellyfin:8096
+}

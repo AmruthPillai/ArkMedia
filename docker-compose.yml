@@ -1,18 +1,81 @@
 version: "3"
 
 services:
-  traefik:
-    container_name: traefik
-    image: traefik:latest
-    command: --api.insecure=true --providers.docker
+  caddy:
+    image: caddy:alpine
+    container_name: caddy
+    restart: unless-stopped
+    networks:
+      - web
     ports:
       - 80:80
       - 443:443
-      - 8080:8080
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy:/data
+      - caddy:/config
+
+  whoami:
+    image: containous/whoami:latest
+    container_name: whoami
+    restart: unless-stopped
+    networks:
+      - web
+
+  portainer:
+    image: portainer/portainer-ce:alpine
+    container_name: portainer
+    restart: unless-stopped
+    networks:
+      - web
+    ports:
+      - 8000:8000
+      - 9000:9000
+      - 9443:9443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  whoami:
-    container_name: whoami
-    image: traefik/whoami
-    labels:
-      - "traefik.http.routers.whoami.rule=Host(`whoami.${HOSTNAME}`)"
+      - portainer:/data
+
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    restart: unless-stopped
+    networks:
+      - web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - WEBUI_PORT=8080
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 8080:8080
+    volumes:
+      - qbittorrent:/config
+      - ./downloads:/downloads
+
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    restart: unless-stopped
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://jellyfin.${HOSTNAME}
+    networks:
+      - web
+    ports:
+      - 8096:8096
+    volumes:
+      - jellyfin:/config
+      - jellyfin:/cache
+      - ./media:/media
+
+volumes:
+  caddy:
+  qbittorrent:
+  portainer:
+  jellyfin:
+
+networks:
+  web:
+    external: true
