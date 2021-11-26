@@ -8,7 +8,7 @@ portainer.{$DOMAIN} {
 }
 
 filebrowser.{$DOMAIN} {
-    reverse_proxy filebrowser:9000
+    reverse_proxy filebrowser:80
 }
 
 qbittorrent.{$DOMAIN} {
