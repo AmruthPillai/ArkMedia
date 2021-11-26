@@ -52,8 +52,8 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Berlin
       - WEBUI_PORT=8080
+      - TZ=Europe/Berlin
     ports:
       - 6881:6881
       - 6881:6881/udp
@@ -65,8 +65,15 @@ services:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
     restart: unless-stopped
+    ports:
+      - 8096:8096
+      - 8920:8920
+      - 7359:7359/udp
+      - 1900:1900/udp
     environment:
-      - JELLYFIN_PublishedServerUrl=https://jellyfin.${DOMAIN}
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
     networks:
       - web
     volumes:
