@@ -17,13 +17,6 @@ services:
       - caddy:/data
       - caddy:/config
 
-  whoami:
-    image: containous/whoami:latest
-    container_name: whoami
-    restart: unless-stopped
-    networks:
-      - web
-
   portainer:
     image: portainer/portainer-ce:alpine
     container_name: portainer
