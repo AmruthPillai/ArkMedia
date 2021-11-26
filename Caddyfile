@@ -4,7 +4,7 @@
 }
 
 portainer.{$DOMAIN} {
-    reverse_proxy portainer:9000
+    reverse_proxy portainer:9443
 }
 
 qbittorrent.{$DOMAIN} {

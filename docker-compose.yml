@@ -25,8 +25,6 @@ services:
       - web
     ports:
       - 8000:8000
-      - 9000:9000
-      - 9443:9443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer:/data
@@ -45,7 +43,6 @@ services:
     ports:
       - 6881:6881
       - 6881:6881/udp
-      - 8080:8080
     volumes:
       - qbittorrent:/config
       - ./media:/downloads
@@ -58,8 +55,6 @@ services:
       - JELLYFIN_PublishedServerUrl=https://jellyfin.${DOMAIN}
     networks:
       - web
-    ports:
-      - 8096:8096
     volumes:
       - jellyfin:/config
       - jellyfin:/cache
