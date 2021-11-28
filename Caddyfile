@@ -12,7 +12,7 @@ filebrowser.{$DOMAIN} {
 }
 
 qbittorrent.{$DOMAIN} {
-    reverse_proxy qbittorrent:8080
+    reverse_proxy qbittorrent:8081
 }
 
 jellyfin.{$DOMAIN} {
