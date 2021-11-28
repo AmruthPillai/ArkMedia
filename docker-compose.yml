@@ -64,15 +64,15 @@ services:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
     restart: unless-stopped
+    networks:
+      - web
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://jellyfin.${DOMAIN}
     ports:
       - 8096:8096
       - 8920:8920
       - 7359:7359/udp
       - 1900:1900/udp
-    environment:
-      - JELLYFIN_PublishedServerUrl=https://jellyfin.${DOMAIN}
-    networks:
-      - web
     volumes:
       - ./media:/media
       - jellyfin:/config
@@ -82,10 +82,10 @@ services:
     image: linuxserver/prowlarr:develop
     container_name: prowlarr
     restart: unless-stopped
-    ports:
-      - 9696:9696
     networks:
       - web
+    ports:
+      - 9696:9696
     volumes:
       - prowlarr:/config
 
@@ -105,10 +105,10 @@ services:
     image: linuxserver/sonarr:develop
     container_name: sonarr
     restart: unless-stopped
-    ports:
-      - 8989:8989
     networks:
       - web
+    ports:
+      - 8989:8989
     volumes:
       - sonarr:/config
       - ./media:/tv
