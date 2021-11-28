@@ -23,6 +23,10 @@ services:
     restart: unless-stopped
     networks:
       - web
+    ports:
+      - 8000:8000
+      - 9000:9000
+      - 9443:9443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer:/data
@@ -35,9 +39,6 @@ services:
       - web
     ports:
       - 8080:80
-    environment:
-      - PUID=1000
-      - PGID=1000
     volumes:
       - .:/srv
       - ./config/filebrowser.db:/database.db
@@ -50,11 +51,9 @@ services:
     networks:
       - web
     environment:
-      - PUID=1000
-      - PGID=1000
-      - WEBUI_PORT=8080
-      - TZ=Europe/Berlin
+      - WEBUI_PORT=8081
     ports:
+      - 8081:8081
       - 6881:6881
       - 6881:6881/udp
     volumes:
@@ -71,9 +70,6 @@ services:
       - 7359:7359/udp
       - 1900:1900/udp
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Berlin
       - JELLYFIN_PublishedServerUrl=https://jellyfin.${DOMAIN}
     networks:
       - web
@@ -82,11 +78,49 @@ services:
       - jellyfin:/config
       - jellyfin:/cache
 
+  prowlarr:
+    image: linuxserver/prowlarr:develop
+    container_name: prowlarr
+    restart: unless-stopped
+    ports:
+      - 9696:9696
+    networks:
+      - web
+    volumes:
+      - prowlarr:/config
+
+  radarr:
+    image: linuxserver/radarr:develop
+    container_name: radarr
+    restart: unless-stopped
+    ports:
+      - 7878:7878
+    networks:
+      - web
+    volumes:
+      - radarr:/config
+      - ./media:/movies
+
+  sonarr:
+    image: linuxserver/sonarr:develop
+    container_name: sonarr
+    restart: unless-stopped
+    ports:
+      - 8989:8989
+    networks:
+      - web
+    volumes:
+      - sonarr:/config
+      - ./media:/tv
+
 volumes:
   qbittorrent:
   filebrowser:
   portainer:
   jellyfin:
+  prowlarr:
+  radarr:
+  sonarr:
   caddy:
 
 networks:

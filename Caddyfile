@@ -18,3 +18,15 @@ qbittorrent.{$DOMAIN} {
 jellyfin.{$DOMAIN} {
     reverse_proxy jellyfin:8096
 }
+
+prowlarr.{$DOMAIN} {
+    reverse_proxy prowlarr:9696
+}
+
+radarr.{$DOMAIN} {
+    reverse_proxy radarr:7878
+}
+
+sonarr.{$DOMAIN} {
+    reverse_proxy sonarr:8989
+}
