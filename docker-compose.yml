@@ -78,63 +78,11 @@ services:
       - jellyfin:/config
       - jellyfin:/cache
 
-  prowlarr:
-    image: linuxserver/prowlarr:develop
-    container_name: prowlarr
-    restart: unless-stopped
-    networks:
-      - web
-    ports:
-      - 9696:9696
-    volumes:
-      - prowlarr:/config
-
-  radarr:
-    image: linuxserver/radarr:latest
-    container_name: radarr
-    restart: unless-stopped
-    ports:
-      - 7878:7878
-    networks:
-      - web
-    volumes:
-      - radarr:/config
-      - ./media/Movies:/movies
-
-  sonarr:
-    image: linuxserver/sonarr:latest
-    container_name: sonarr
-    restart: unless-stopped
-    networks:
-      - web
-    ports:
-      - 8989:8989
-    volumes:
-      - sonarr:/config
-      - ./media/Shows:/tv
-
-  bazarr:
-    image: linuxserver/bazarr:latest
-    container_name: bazarr
-    restart: unless-stopped
-    networks:
-      - web
-    ports:
-      - 6767:6767
-    volumes:
-      - bazarr:/config
-      - ./media/Movies:/movies
-      - ./media/Shows:/tv
-
 volumes:
   qbittorrent:
   filebrowser:
   portainer:
   jellyfin:
-  prowlarr:
-  radarr:
-  sonarr:
-  bazarr:
   caddy:
 
 networks:
